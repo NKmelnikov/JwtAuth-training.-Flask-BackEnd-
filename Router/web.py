@@ -1,12 +1,34 @@
-from flask import Blueprint, request, escape
+from flask import Blueprint, request, jsonify
+from flask_praetorian import auth_required
 from ..Controller.UserController import UserController
 
 web = Blueprint('app', __name__)
 
 
-@web.route('/register', methods=['GET', 'POST'])
+@web.route('/')
+def welcome():
+    return 'welcome to myApp'
+
+
+@web.route('/register', methods=['POST'])
 def register():
-    if request.method == 'POST':
-        name = request.form['name']
-        UserController().create_account(name)
-        return 'User registered'
+    json_data = request.get_json()
+    email = json_data['email']
+    password = json_data['password']
+    UserController().create_account(email, password)
+    return 'User registered, go to your mailBox and confirm it'
+
+
+@web.route('/login', methods=['POST'])
+def login():
+    json_data = request.get_json()
+    email = json_data['email']
+    password = json_data['password']
+    return UserController().create_auth_token(email, password)
+
+
+@web.route('/protected')
+@auth_required
+def protected():
+    return jsonify({'result': 'You are in a special area!'})
+

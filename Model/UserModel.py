@@ -5,10 +5,28 @@ from ..Model.PersonalModel import PersonalModel
 
 class UserModel(mongoengine.Document):
     registered_date = mongoengine.DateTimeField(default=datetime.datetime.now)
-    name = mongoengine.StringField(required=True)
+    email = mongoengine.StringField(required=True)
+    password = mongoengine.StringField(required=True)
+
     personal = mongoengine.EmbeddedDocumentListField(PersonalModel)
 
     meta = {
         'db_alias': 'core',
         'collection': 'user'
     }
+
+    @classmethod
+    def lookup(cls, email):
+        return cls.objects(email=email).first()
+
+    @classmethod
+    def identify(cls, id):
+        return cls.objects(_id=id).first()
+
+    @property
+    def rolenames(self):
+        return []
+
+    @property
+    def identity(self):
+        return self.email

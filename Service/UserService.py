@@ -1,19 +1,20 @@
-from typing import List, Optional
-import datetime
-import bson
+from flask import jsonify
 from ..Model.UserModel import UserModel
+from ..Config.auth import guard
 
 
 class UserService:
 
     @staticmethod
-    def create_account(name) -> UserModel:
+    def create_account(email, password) -> UserModel:
         user = UserModel()
-        user.name = name
+        user.email = email
+        user.password = guard.hash_password(password)
         user.save()
         return user
 
     @staticmethod
-    def find_account_by_name(name) -> UserModel:
-        user = UserModel.objects(name=name).first()
-        return user
+    def create_auth_token(email, password) -> UserModel:
+        user = guard.authenticate(email, password)
+        token = guard.encode_jwt_token(user)
+        return jsonify({'access_token': token})

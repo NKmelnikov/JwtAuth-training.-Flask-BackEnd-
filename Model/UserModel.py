@@ -21,7 +21,7 @@ class UserModel(mongoengine.Document):
 
     @classmethod
     def identify(cls, id):
-        return cls.objects(_id=id).first()
+        return cls.objects(email=id).first()
 
     @property
     def rolenames(self):

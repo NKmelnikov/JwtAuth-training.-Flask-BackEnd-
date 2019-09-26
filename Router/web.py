@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from flask_praetorian import auth_required
 from ..Controller.UserController import UserController
 
 web = Blueprint('app', __name__)
@@ -26,9 +25,4 @@ def login():
     password = json_data['password']
     return UserController().create_auth_token(email, password)
 
-
-@web.route('/protected')
-@auth_required
-def protected():
-    return jsonify({'result': 'You are in a special area!'})
 

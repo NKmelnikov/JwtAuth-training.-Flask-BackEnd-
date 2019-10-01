@@ -1,12 +1,14 @@
 from flask import Blueprint, request, jsonify
+from flask_cors import CORS, cross_origin
 from ..Controller.UserController import UserController
 
 web = Blueprint('app', __name__)
+CORS(web)
 
 
 @web.route('/')
 def welcome():
-    return 'welcome to myApp'
+    return jsonify({'result': 'welcome to server'})
 
 
 @web.route('/register', methods=['POST'])

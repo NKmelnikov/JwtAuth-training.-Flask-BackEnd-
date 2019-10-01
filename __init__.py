@@ -8,6 +8,7 @@ from os import environ
 
 def create_app():
     app = Flask(__name__)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
     app.config['FLASK_APP'] = environ.get('FLASK_APP')
     app.config['FLASK_ENV'] = environ.get('FLASK_ENV')

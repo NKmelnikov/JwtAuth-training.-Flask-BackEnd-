@@ -1,0 +1,4 @@
+flask
+flask-praetorian
+mongoengine
+python-dotenv

@@ -17,4 +17,4 @@ class UserService:
     def create_auth_token(email, password) -> UserModel:
         user = guard.authenticate(email, password)
         token = guard.encode_jwt_token(user)
-        return jsonify({'access_token': token})
+        return jsonify({'email': email, 'password': password, 'token': token})

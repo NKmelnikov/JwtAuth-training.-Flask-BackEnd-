@@ -12,7 +12,7 @@ class UserModel(mongoengine.Document):
 
     meta = {
         'db_alias': 'core',
-        'collection': 'user'
+        'collection': 'users'
     }
 
     @classmethod

@@ -10,3 +10,7 @@ class PostController:
     @staticmethod
     def create_post(post):
         PostService().create_post(post)
+
+    @staticmethod
+    def update_post_position(data):
+        return PostService().update_post_position(data)

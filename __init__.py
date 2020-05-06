@@ -20,6 +20,8 @@ def create_app():
     app.config['FLASK_APP'] = environ.get('FLASK_APP')
     app.config['FLASK_ENV'] = environ.get('FLASK_ENV')
     app.config['FLASK_DEBUG'] = environ.get('FLASK_DEBUG')
+    app.config['UPLOAD_PATH'] = environ.get('UPLOAD_PATH')
+    app.config['SERVER_URL'] = environ.get('SERVER_URL')
     app.config['JWT_ACCESS_LIFESPAN'] = {'minutes': 100000}
 
     app.register_blueprint(web)

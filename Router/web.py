@@ -30,6 +30,16 @@ def login():
     return UserController().create_auth_token(email, password)
 
 
+@web.route('/ck-upload', methods=['POST'])
+def ck_upload():
+    return UploadHelper().ck_upload(request)
+
+
+@web.route('/files/<filename>')
+def uploaded_files(filename):
+    return UploadHelper().uploaded_files(filename)
+
+
 @web.route('/upload-file', methods=['POST'])
 def upload_file():
     json_data = request.get_json()

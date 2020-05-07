@@ -43,7 +43,7 @@ def uploaded_files(filename):
 @web.route('/upload-file', methods=['POST'])
 def upload_file():
     json_data = request.get_json()
-    return UploadHelper().upload_file(json_data['b64'])
+    return UploadHelper().upload_file(json_data)
 
 
 # POST URLS
@@ -52,10 +52,21 @@ def get_posts():
     return PostController().get_posts()
 
 
-@web.route('/add-post', methods=['POST'])
+@web.route('/create-post', methods=['POST'])
 def create_post():
-    post = request.get_json()
-    PostController().create_post(post)
+    PostController().create_post(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/update-post', methods=['POST'])
+def update_post():
+    PostController().update_post(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/delete-post', methods=['POST'])
+def delete_post():
+    PostController().delete_post(request.get_json())
     return jsonify({'response': 'Ok'})
 
 

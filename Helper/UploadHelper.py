@@ -12,13 +12,18 @@ from flask_ckeditor import *
 class UploadHelper:
 
     @staticmethod
-    def upload_file(b64_string):
+    def upload_file(data):
+        b64_string = data['b64']
+        name = data['name']
         starter = b64_string.find(',')
         image_data = b64_string[starter + 1:]
         image_data = bytes(image_data, encoding="ascii")
         im = Image.open(BytesIO(base64.b64decode(image_data)))
-        im.save('image.jpg')
-        return jsonify({'response': 'Ok'})
+        path = os.path.join(current_app.config['UPLOAD_PATH'], name)
+        im.save(path)
+        return jsonify({'path': path})
+
+    # TODO detecting extension
 
     @staticmethod
     def ck_upload(request):
@@ -37,5 +42,3 @@ class UploadHelper:
     def uploaded_files(filename):
         path = current_app.config['UPLOAD_PATH']
         return send_from_directory(path, filename)
-
-# TODO detecting extension

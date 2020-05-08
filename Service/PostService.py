@@ -17,7 +17,7 @@ class PostService:
         post.postShortText = _post['postShortText']
         post.postArticle = _post['postArticle']
         post.postImgPath = _post['postImgPath']
-        post.active = _post['active']
+        post.active = _post.get('active', 0)
         post.save()
         return post
 
@@ -28,7 +28,7 @@ class PostService:
             "set__postShortText": post['postShortText'],
             "set__postArticle": post['postArticle'],
             "set__postImgPath": post['postImgPath'],
-            "set__active": post['active'],
+            "set__active": post.get('active', 0),
         })
 
     @staticmethod

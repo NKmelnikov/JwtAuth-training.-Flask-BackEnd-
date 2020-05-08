@@ -23,4 +23,16 @@ class PostController:
     def update_post_position(data):
         return PostService().update_post_position(data)
 
+    @staticmethod
+    def bulk_activate(data):
+        PostService().bulk_activate(data)
+
+    @staticmethod
+    def bulk_deactivate(data):
+        PostService().bulk_deactivate(data)
+
+    @staticmethod
+    def bulk_delete(data):
+        PostService().bulk_delete(data)
+
 

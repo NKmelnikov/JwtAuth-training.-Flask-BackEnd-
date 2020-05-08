@@ -74,3 +74,21 @@ def delete_post():
 def update_post_position():
     data = request.get_json()
     return PostController().update_post_position(data)
+
+
+@web.route('/bulk-activate', methods=['POST'])
+def bulk_activate():
+    PostController().bulk_activate(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/bulk-deactivate', methods=['POST'])
+def bulk_deactivate():
+    PostController().bulk_deactivate(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/bulk-delete', methods=['POST'])
+def bulk_delete():
+    PostController().bulk_delete(request.get_json())
+    return jsonify({'response': 'Ok'})

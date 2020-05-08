@@ -40,3 +40,18 @@ class PostService:
         for i, item in enumerate(data):
             PostModel.objects(id=item['_id']['$oid']).update_one(set__position=i + 1)
         return PostModel.objects().to_json()
+
+    @staticmethod
+    def bulk_activate(data):
+        for i, item in enumerate(data):
+            PostModel.objects(id=item['_id']['$oid']).update_one(set__active=1)
+
+    @staticmethod
+    def bulk_deactivate(data):
+        for i, item in enumerate(data):
+            PostModel.objects(id=item['_id']['$oid']).update_one(set__active=0)
+
+    @staticmethod
+    def bulk_delete(data):
+        for i, item in enumerate(data):
+            PostModel.objects(id=item['_id']['$oid']).delete()

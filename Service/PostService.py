@@ -10,9 +10,13 @@ class PostService:
         return PostModel.objects().order_by('position').to_json()
 
     @staticmethod
+    def get_posts_sorted_by_date() -> PostModel:
+        return PostModel.objects().order_by('-createdAt').to_json()
+
+    @staticmethod
     def create_post(_post) -> PostModel:
         post = PostModel()
-        post.position = PostModel.objects().count() + 1
+        post.position = 0
         post.postTitle = _post['postTitle']
         post.postShortText = _post['postShortText']
         post.postArticle = _post['postArticle']

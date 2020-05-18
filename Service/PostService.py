@@ -46,16 +46,16 @@ class PostService:
         return PostModel.objects().to_json()
 
     @staticmethod
-    def bulk_activate(data):
+    def bulk_activate_posts(data):
         for i, item in enumerate(data):
             PostModel.objects(id=item['_id']['$oid']).update_one(set__active=1)
 
     @staticmethod
-    def bulk_deactivate(data):
+    def bulk_deactivate_posts(data):
         for i, item in enumerate(data):
             PostModel.objects(id=item['_id']['$oid']).update_one(set__active=0)
 
     @staticmethod
-    def bulk_delete(data):
+    def bulk_delete_posts(data):
         for i, item in enumerate(data):
             PostModel.objects(id=item['_id']['$oid']).delete()

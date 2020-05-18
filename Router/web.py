@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_cors import CORS
 from ..Controller.UserController import UserController
 from ..Controller.PostController import PostController
+from ..Controller.BrandController import BrandController
 from ..Helper.UploadHelper import UploadHelper
 
 web = Blueprint('app', __name__)
@@ -46,7 +47,7 @@ def upload_file():
     return UploadHelper().upload_file(json_data)
 
 
-# POST URLS
+# POST URLS======================================
 @web.route('/get-posts', methods=['GET'])
 def get_posts():
     return PostController().get_posts()
@@ -76,19 +77,67 @@ def update_post_position():
     return PostController().update_post_position(data)
 
 
-@web.route('/bulk-activate', methods=['POST'])
-def bulk_activate():
-    PostController().bulk_activate(request.get_json())
+@web.route('/bulk-activate-posts', methods=['POST'])
+def bulk_activate_posts():
+    PostController().bulk_activate_posts(request.get_json())
     return jsonify({'response': 'Ok'})
 
 
-@web.route('/bulk-deactivate', methods=['POST'])
-def bulk_deactivate():
-    PostController().bulk_deactivate(request.get_json())
+@web.route('/bulk-deactivate-posts', methods=['POST'])
+def bulk_deactivate_posts():
+    PostController().bulk_deactivate_posts(request.get_json())
     return jsonify({'response': 'Ok'})
 
 
-@web.route('/bulk-delete', methods=['POST'])
-def bulk_delete():
-    PostController().bulk_delete(request.get_json())
+@web.route('/bulk-delete-posts', methods=['POST'])
+def bulk_delete_posts():
+    PostController().bulk_delete_posts(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+# BRAND URLS======================================
+@web.route('/get-brands', methods=['GET'])
+def get_brands():
+    return BrandController().get_brands()
+
+
+@web.route('/create-brand', methods=['POST'])
+def create_brand():
+    BrandController().create_brand(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/update-brand', methods=['POST'])
+def update_brand():
+    BrandController().update_brand(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/delete-brand', methods=['POST'])
+def delete_brand():
+    BrandController().delete_brand(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/update-brand-position', methods=['POST'])
+def update_brand_position():
+    data = request.get_json()
+    return BrandController().update_brand_position(data)
+
+
+@web.route('/bulk-activate-brands', methods=['POST'])
+def bulk_activate_brands():
+    BrandController().bulk_activate_brands(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/bulk-deactivate-brands', methods=['POST'])
+def bulk_deactivate_brands():
+    BrandController().bulk_deactivate_brands(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/bulk-delete-brands', methods=['POST'])
+def bulk_delete_brands():
+    BrandController().bulk_delete_brands(request.get_json())
     return jsonify({'response': 'Ok'})

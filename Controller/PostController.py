@@ -1,6 +1,7 @@
 from ..Service.PostService import PostService
 import json
 
+
 class PostController:
 
     @staticmethod
@@ -25,21 +26,16 @@ class PostController:
         return PostService().update_post_position(data)
 
     @staticmethod
-    def bulk_activate(data):
-        PostService().bulk_activate(data)
+    def bulk_activate_posts(data):
+        PostService().bulk_activate_posts(data)
         PostService().update_post_position(json.loads(PostService().get_posts()))
-
 
     @staticmethod
-    def bulk_deactivate(data):
-        PostService().bulk_deactivate(data)
+    def bulk_deactivate_posts(data):
+        PostService().bulk_deactivate_posts(data)
         PostService().update_post_position(json.loads(PostService().get_posts()))
-
 
     @staticmethod
-    def bulk_delete(data):
-        PostService().bulk_delete(data)
+    def bulk_delete_posts(data):
+        PostService().bulk_delete_posts(data)
         PostService().update_post_position(json.loads(PostService().get_posts()))
-
-
-

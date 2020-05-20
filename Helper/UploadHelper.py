@@ -13,8 +13,9 @@ class UploadHelper:
 
     @staticmethod
     def upload_file(data):
+        ts = calendar.timegm(time.gmtime())
         b64_string = data['b64']
-        name = data['name']
+        name = f"{ts}.{data['name']}"
         starter = b64_string.find(',')
         image_data = b64_string[starter + 1:]
         image_data = bytes(image_data, encoding="ascii")

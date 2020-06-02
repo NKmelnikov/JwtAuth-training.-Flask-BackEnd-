@@ -3,6 +3,7 @@ from flask_cors import CORS
 from ..Controller.UserController import UserController
 from ..Controller.PostController import PostController
 from ..Controller.BrandController import BrandController
+from ..Controller.CatalogController import CatalogController
 from ..Helper.UploadHelper import UploadHelper
 
 web = Blueprint('app', __name__)
@@ -41,13 +42,18 @@ def uploaded_files(filename):
     return UploadHelper().uploaded_files(filename)
 
 
-@web.route('/upload-file', methods=['POST'])
-def upload_file():
-    json_data = request.get_json()
-    return UploadHelper().upload_file(json_data)
+@web.route('/upload-img-from-b64', methods=['POST'])
+def upload_img_from_b64():
+    return UploadHelper().upload_img_from_b64(request.get_json())
 
 
-# POST URLS======================================
+@web.route('/upload-pdf', methods=['POST'])
+def upload_pdf():
+    return UploadHelper().upload_pdf(request.files['pdf_file'])
+
+
+# ======================================POST URLS======================================
+
 @web.route('/get-posts', methods=['GET'])
 def get_posts():
     return PostController().get_posts()
@@ -73,8 +79,7 @@ def delete_post():
 
 @web.route('/update-post-position', methods=['POST'])
 def update_post_position():
-    data = request.get_json()
-    return PostController().update_post_position(data)
+    return PostController().update_post_position(request.get_json())
 
 
 @web.route('/bulk-activate-posts', methods=['POST'])
@@ -95,7 +100,8 @@ def bulk_delete_posts():
     return jsonify({'response': 'Ok'})
 
 
-# BRAND URLS======================================
+# ======================================BRAND URLS======================================
+
 @web.route('/get-brands', methods=['GET'])
 def get_brands():
     return BrandController().get_brands()
@@ -121,8 +127,7 @@ def delete_brand():
 
 @web.route('/update-brand-position', methods=['POST'])
 def update_brand_position():
-    data = request.get_json()
-    return BrandController().update_brand_position(data)
+    return BrandController().update_brand_position(request.get_json())
 
 
 @web.route('/bulk-activate-brands', methods=['POST'])
@@ -140,4 +145,52 @@ def bulk_deactivate_brands():
 @web.route('/bulk-delete-brands', methods=['POST'])
 def bulk_delete_brands():
     BrandController().bulk_delete_brands(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+# ======================================CATALOGS URLS======================================
+
+@web.route('/get-catalogs', methods=['GET'])
+def get_catalogs():
+    return CatalogController().get_catalogs()
+
+
+@web.route('/create-catalog', methods=['POST'])
+def create_catalog():
+    CatalogController().create_catalog(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/update-catalog', methods=['POST'])
+def update_catalog():
+    CatalogController().update_catalog(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/delete-catalog', methods=['POST'])
+def delete_catalog():
+    CatalogController().delete_catalog(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/update-catalog-position', methods=['POST'])
+def update_catalog_position():
+    return CatalogController().update_catalog_position(request.get_json())
+
+
+@web.route('/bulk-activate-catalogs', methods=['POST'])
+def bulk_activate_catalogs():
+    CatalogController().bulk_activate_catalogs(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/bulk-deactivate-catalogs', methods=['POST'])
+def bulk_deactivate_catalogs():
+    CatalogController().bulk_deactivate_catalogs(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@web.route('/bulk-delete-catalogs', methods=['POST'])
+def bulk_delete_catalogs():
+    CatalogController().bulk_delete_catalogs(request.get_json())
     return jsonify({'response': 'Ok'})

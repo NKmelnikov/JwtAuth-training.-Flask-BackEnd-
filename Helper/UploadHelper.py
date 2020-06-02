@@ -12,10 +12,18 @@ from flask_ckeditor import *
 class UploadHelper:
 
     @staticmethod
-    def upload_file(data):
+    def upload_pdf(file):
+        ts = calendar.timegm(time.gmtime())
+        name = f"{ts}__{file.filename}"
+        path = f"{current_app.config['UPLOAD_PATH']}/pdf/{name}"
+        file.save(path)
+        return jsonify({'path': path, 'name': file.filename})
+
+    @staticmethod
+    def upload_img_from_b64(data):
         ts = calendar.timegm(time.gmtime())
         b64_string = data['b64']
-        name = f"{ts}.{data['name']}"
+        name = f"{ts}__{data['name']}"
         starter = b64_string.find(',')
         image_data = b64_string[starter + 1:]
         image_data = bytes(image_data, encoding="ascii")

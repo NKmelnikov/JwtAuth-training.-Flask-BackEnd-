@@ -15,7 +15,7 @@ class UploadHelper:
     def upload_pdf(file):
         ts = calendar.timegm(time.gmtime())
         name = f"{ts}__{file.filename}"
-        path = f"{current_app.config['UPLOAD_PATH']}/pdf/{name}"
+        path = f"{current_app.config['UPLOAD_PATH']}pdf/{name}"
         file.save(path)
         return jsonify({'path': path, 'name': file.filename})
 

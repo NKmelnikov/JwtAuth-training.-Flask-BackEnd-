@@ -1,12 +1,14 @@
+import json
 from flask import jsonify
 from bson import json_util
 from ..Model.CatalogModel import CatalogModel
+from ..Model.BrandEmbedModel import BrandEmbedModel
 
 
 class CatalogService:
 
     @staticmethod
-    def get_catalogs() -> CatalogModel:
+    def get_catalogs():
         return CatalogModel.objects().order_by('position').to_json()
 
     @staticmethod
@@ -18,9 +20,15 @@ class CatalogService:
         catalog = CatalogModel()
         catalog.position = 0
         catalog.active = _catalog.get('active', 0)
-        catalog.brandId = _catalog['brandId']
         catalog.catalogName = _catalog['catalogName']
         catalog.catalogPdfPath = _catalog['catalogPdfPath']
+        catalog.brand = BrandEmbedModel()
+        catalog.brand._id = _catalog['brand']['_id']['$oid']
+        catalog.brand.active = _catalog['brand']['active']
+        catalog.brand.position = _catalog['brand']['position']
+        catalog.brand.brandName = _catalog['brand']['brandName']
+        catalog.brand.brandImgPath = _catalog['brand']['brandImgPath']
+        catalog.brand.createdAt = _catalog['brand']['createdAt']['$date']
         catalog.save()
         return catalog
 

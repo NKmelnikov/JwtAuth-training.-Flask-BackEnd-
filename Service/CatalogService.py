@@ -2,14 +2,25 @@ import json
 from flask import jsonify
 from bson import json_util
 from ..Model.CatalogModel import CatalogModel
-from ..Model.BrandEmbedModel import BrandEmbedModel
+from ..Model.BrandModel import BrandModel
+from ..Helper.JSONEncoder import JSONEncoder
 
 
 class CatalogService:
 
     @staticmethod
     def get_catalogs():
-        return CatalogModel.objects().order_by('position').to_json()
+        result = list(CatalogModel.objects.aggregate(*[
+            {
+                '$lookup': {
+                    'from': 'brands',
+                    'localField': 'brand',
+                    'foreignField': '_id',
+                    'as': 'brands'}
+            }
+        ]))
+
+        return JSONEncoder().encode(result)
 
     @staticmethod
     def get_catalogs_sorted_by_date() -> CatalogModel:
@@ -22,13 +33,7 @@ class CatalogService:
         catalog.active = _catalog.get('active', 0)
         catalog.catalogName = _catalog['catalogName']
         catalog.catalogPdfPath = _catalog['catalogPdfPath']
-        catalog.brand = BrandEmbedModel()
-        catalog.brand._id = _catalog['brand']['_id']['$oid']
-        catalog.brand.active = _catalog['brand']['active']
-        catalog.brand.position = _catalog['brand']['position']
-        catalog.brand.brandName = _catalog['brand']['brandName']
-        catalog.brand.brandImgPath = _catalog['brand']['brandImgPath']
-        catalog.brand.createdAt = _catalog['brand']['createdAt']['$date']
+        catalog.brand = BrandModel(id=_catalog['brand']['_id']['$oid'])
         catalog.save()
         return catalog
 

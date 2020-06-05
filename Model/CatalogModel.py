@@ -1,6 +1,6 @@
 import datetime
 import mongoengine
-from ..Model.BrandEmbedModel import BrandEmbedModel
+from ..Model.BrandModel import BrandModel
 
 
 class CatalogModel(mongoengine.Document):
@@ -9,7 +9,7 @@ class CatalogModel(mongoengine.Document):
     active = mongoengine.IntField(default=1)
     catalogPdfPath = mongoengine.StringField()
     catalogName = mongoengine.StringField()
-    brand = mongoengine.EmbeddedDocumentField(BrandEmbedModel)
+    brand = mongoengine.ReferenceField(BrandModel)
 
     meta = {
         'db_alias': 'core',

@@ -29,18 +29,18 @@ class CatalogService:
     @staticmethod
     def create_catalog(_catalog) -> CatalogModel:
         catalog = CatalogModel()
+        catalog.brand = BrandModel(id=_catalog['brand']['_id']['$oid'])
         catalog.position = 0
         catalog.active = _catalog.get('active', 0)
         catalog.catalogName = _catalog['catalogName']
         catalog.catalogPdfPath = _catalog['catalogPdfPath']
-        catalog.brand = BrandModel(id=_catalog['brand']['_id']['$oid'])
         catalog.save()
         return catalog
 
     @staticmethod
     def update_catalog(catalog):
-        CatalogModel.objects(id=catalog['_id']['$oid']).update(**{
-            "set__brandId": catalog['brandId'],
+        CatalogModel.objects(id=catalog['_id']).update(**{
+            "set__brand": BrandModel(id=catalog['brand']['_id']['$oid']),
             "set__catalogName": catalog['catalogName'],
             "set__catalogPdfPath": catalog['catalogPdfPath'],
             "set__active": catalog.get('active', 0),
@@ -48,7 +48,7 @@ class CatalogService:
 
     @staticmethod
     def delete_catalog(catalog):
-        CatalogModel.objects(id=catalog['_id']['$oid']).delete()
+        CatalogModel.objects(id=catalog['_id']).delete()
 
     @staticmethod
     def update_catalog_position(data):
@@ -59,14 +59,14 @@ class CatalogService:
     @staticmethod
     def bulk_activate_catalogs(data):
         for i, item in enumerate(data):
-            CatalogModel.objects(id=item['_id']['$oid']).update_one(set__active=1)
+            CatalogModel.objects(id=item['_id']).update_one(set__active=1)
 
     @staticmethod
     def bulk_deactivate_catalogs(data):
         for i, item in enumerate(data):
-            CatalogModel.objects(id=item['_id']['$oid']).update_one(set__active=0)
+            CatalogModel.objects(id=item['_id']).update_one(set__active=0)
 
     @staticmethod
     def bulk_delete_catalogs(data):
         for i, item in enumerate(data):
-            CatalogModel.objects(id=item['_id']['$oid']).delete()
+            CatalogModel.objects(id=item['_id']).delete()

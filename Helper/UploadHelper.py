@@ -51,3 +51,8 @@ class UploadHelper:
     def uploaded_files(filename):
         path = current_app.config['UPLOAD_PATH']
         return send_from_directory(path, filename)
+
+    @staticmethod
+    def uploaded_pdfs(filename):
+        path = f"{current_app.config['UPLOAD_PATH']}pdf/"
+        return send_from_directory(path, filename)

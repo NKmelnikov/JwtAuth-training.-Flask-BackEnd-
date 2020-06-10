@@ -42,6 +42,11 @@ def uploaded_files(filename):
     return UploadHelper().uploaded_files(filename)
 
 
+@web.route('/files/pdf/<filename>')
+def uploaded_pdfs(filename):
+    return UploadHelper().uploaded_pdfs(filename)
+
+
 @web.route('/upload-img-from-b64', methods=['POST'])
 def upload_img_from_b64():
     return UploadHelper().upload_img_from_b64(request.get_json())

@@ -1,13 +1,13 @@
 import datetime
-import mongoengine
+import mongoengine as m
 
 
-class BrandModel(mongoengine.Document):
-    createdAt = mongoengine.DateTimeField(default=datetime.datetime.now)
-    position = mongoengine.IntField(default=1)
-    active = mongoengine.IntField(default=1)
-    brandImgPath = mongoengine.StringField()
-    brandName = mongoengine.StringField()
+class BrandModel(m.Document):
+    createdAt = m.DateTimeField(default=datetime.datetime.now)
+    position = m.IntField(default=1)
+    active = m.IntField(default=1)
+    brandImgPath = m.StringField()
+    brandName = m.StringField()
 
     meta = {
         'db_alias': 'core',

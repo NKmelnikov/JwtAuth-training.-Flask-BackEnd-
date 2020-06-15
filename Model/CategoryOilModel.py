@@ -1,15 +1,15 @@
 import datetime
-import mongoengine
-from ..Model.ProductOilModel import ProductOilModel
+import mongoengine as m
+from ..Model.SubCategoryOilModel import SubCategoryOilModel
 
 
-class CategoryOilModel(mongoengine.Document):
-    createdAt = mongoengine.DateTimeField(default=datetime.datetime.now)
-    position = mongoengine.IntField(default=1)
-    active = mongoengine.IntField(default=1)
-    categoryName = mongoengine.StringField()
-    categoryDescription = mongoengine.StringField()
-    products = mongoengine.EmbeddedDocumentListField(ProductOilModel)
+class CategoryOilModel(m.Document):
+    createdAt = m.DateTimeField(default=datetime.datetime.now)
+    position = m.IntField(default=1)
+    active = m.IntField(default=1)
+    categoryName = m.StringField()
+    categoryDescription = m.StringField()
+    subCategories = m.EmbeddedDocumentListField(SubCategoryOilModel)
 
     meta = {
         'db_alias': 'core',

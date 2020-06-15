@@ -1,15 +1,15 @@
 import datetime
-import mongoengine
+import mongoengine as m
 from ..Model.BrandModel import BrandModel
 
 
-class CatalogModel(mongoengine.Document):
-    brand = mongoengine.ReferenceField(BrandModel)
-    createdAt = mongoengine.DateTimeField(default=datetime.datetime.now)
-    position = mongoengine.IntField(default=1)
-    active = mongoengine.IntField(default=1)
-    catalogPdfPath = mongoengine.StringField()
-    catalogName = mongoengine.StringField()
+class CatalogModel(m.Document):
+    brand = m.ReferenceField(BrandModel)
+    createdAt = m.DateTimeField(default=datetime.datetime.now)
+    position = m.IntField(default=1)
+    active = m.IntField(default=1)
+    catalogPdfPath = m.StringField()
+    catalogName = m.StringField()
 
     meta = {
         'db_alias': 'core',

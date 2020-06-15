@@ -2,11 +2,11 @@ import datetime
 import mongoengine as m
 from bson import ObjectId
 from ..Model.SubCategoryOilModel import SubCategoryOilModel
-from ..Model.BrandEmbedModel import BrandEmbedModel
+from ..Model.CategoryOilModel import CategoryOilModel
+from ..Model.BrandModel import BrandModel
 
 
-class ProductOilModel(m.EmbeddedDocument):
-    _id = m.ObjectIdField(default=ObjectId)
+class ProductOilModel(m.Document):
     createdAt = m.IntField()
     position = m.IntField()
     active = m.IntField()
@@ -14,7 +14,8 @@ class ProductOilModel(m.EmbeddedDocument):
     productImgPath = m.StringField()
     productDescription = m.StringField()
     productSpec = m.StringField()
-    subCategory = m.EmbeddedDocumentListField(SubCategoryOilModel)
-    brand = m.EmbeddedDocumentField(BrandEmbedModel)
+    category_id = m.ReferenceField(CategoryOilModel)
+    subCategory_id = m.ReferenceField(SubCategoryOilModel)
+    brand_id = m.ReferenceField(BrandModel)
 
 

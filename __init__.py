@@ -2,6 +2,11 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from .Config import database, auth
 from .Router.web import web
+from .Router.category_oil import category_oil
+from .Router.brand import brand
+from .Router.catalog import catalog
+from .Router.post import post
+from .Router.product import product
 from .Model.UserModel import UserModel
 from os import environ
 import sentry_sdk
@@ -25,9 +30,15 @@ def create_app():
     app.config['JWT_ACCESS_LIFESPAN'] = {'minutes': 100000}
 
     app.register_blueprint(web)
+    app.register_blueprint(category_oil)
+    app.register_blueprint(brand)
+    app.register_blueprint(catalog)
+    app.register_blueprint(post)
+    app.register_blueprint(product)
     # app.before_request_funcs = {
     #     'authenticated': [auth_middleware]
     # }
     database.global_init()
+    database.db()
     auth.guard.init_app(app, UserModel)
     return app

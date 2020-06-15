@@ -1,14 +1,14 @@
 import datetime
-import mongoengine
+import mongoengine as m
 from ..Model.PersonalModel import PersonalModel
 
 
-class UserModel(mongoengine.Document):
-    registered_date = mongoengine.DateTimeField(default=datetime.datetime.now)
-    email = mongoengine.StringField(required=True)
-    password = mongoengine.StringField(required=True)
+class UserModel(m.Document):
+    registered_date = m.DateTimeField(default=datetime.datetime.now)
+    email = m.StringField(required=True)
+    password = m.StringField(required=True)
 
-    personal = mongoengine.EmbeddedDocumentListField(PersonalModel)
+    personal = m.EmbeddedDocumentListField(PersonalModel)
 
     meta = {
         'db_alias': 'core',

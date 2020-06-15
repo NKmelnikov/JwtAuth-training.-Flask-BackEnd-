@@ -1,9 +1,9 @@
-import mongoengine
+import mongoengine as m
 
 
-class PersonalModel(mongoengine.EmbeddedDocument):
-    user_owner_id = mongoengine.ObjectIdField
-    gender = mongoengine.StringField()
-    age = mongoengine.StringField()
-    phone = mongoengine.IntField()
-    email = mongoengine.EmailField()
+class PersonalModel(m.EmbeddedDocument):
+    user_owner_id = m.ObjectIdField
+    gender = m.StringField()
+    age = m.StringField()
+    phone = m.IntField()
+    email = m.EmailField()

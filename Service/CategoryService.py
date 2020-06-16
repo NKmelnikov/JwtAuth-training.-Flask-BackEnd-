@@ -67,5 +67,12 @@ class CategoryService:
         CategoryOilModel.objects(id=catalog['_id']['$oid']).delete()
 
     @staticmethod
-    def delete_sub_category(catalog):
-        CategoryOilModel.objects(id=catalog['_id']['$oid']).delete()
+    def delete_sub_category(sub):
+        db().categories_oil.update(
+            {"_id": ObjectId(sub['_id'])},
+            {'$pull': {
+                'subCategories': {
+                    "sub_id": ObjectId(sub['sub_id']),
+                }
+            }}
+        )

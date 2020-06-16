@@ -29,9 +29,21 @@ def update_category_oil():
     return jsonify({'response': 'Ok'})
 
 
+@category_oil.route('/update-sub-category-oil', methods=['POST'])
+def update_sub_category_oil():
+    CategoryController().update_sub_category_oil(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
 @category_oil.route('/delete-category-oil', methods=['POST'])
 def delete_category_oil():
     CategoryController().delete_category_oil(request.get_json())
+    return jsonify({'response': 'Ok'})
+
+
+@category_oil.route('/delete-sub-category-oil', methods=['POST'])
+def delete_sub_category_oil():
+    CategoryController().delete_sub_category_oil(request.get_json())
     return jsonify({'response': 'Ok'})
 
 

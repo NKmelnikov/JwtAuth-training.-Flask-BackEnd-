@@ -18,12 +18,20 @@ class CategoryController:
         CategoryService().create_sub_category_oil(sub)
 
     @staticmethod
-    def update_category_oil(Category):
-        CategoryService().update_category(Category)
+    def update_category_oil(category):
+        CategoryService().update_category_oil(category)
 
     @staticmethod
-    def delete_category_oil(Category):
-        CategoryService().delete_category(Category)
+    def update_sub_category_oil(sub):
+        CategoryService().update_sub_category_oil(sub)
+
+    @staticmethod
+    def delete_category_oil(category):
+        CategoryService().delete_category(category)
+
+    @staticmethod
+    def delete_sub_category_oil(sub):
+        CategoryService().delete_sub_category(sub)
 
     @staticmethod
     def update_category_position_oil(data):

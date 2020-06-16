@@ -32,10 +32,10 @@ class CategoryService:
     @staticmethod
     def create_sub_category_oil(sub):
         db().categories_oil.update(
-            {"_id": ObjectId("5ee787d532e45322e2de9e5d")},
+            {"_id": ObjectId(sub['_id'])},
             {'$push': {
                 'subCategories': {
-                    "_id": ObjectId(),
+                    "sub_id": ObjectId(),
                     "createdAt": datetime.datetime.now(),
                     'position': sub.get('position', 1),
                     'active': sub.get('active', 0),
@@ -45,3 +45,27 @@ class CategoryService:
                 }
             }}
         )
+
+    @staticmethod
+    def update_category_oil(category):
+        CategoryOilModel.objects(id=category['_id']['$oid']).update(**{
+            "set__categoryName": category['categoryName'],
+            "set__categoryDescription": category['categoryDescription'],
+            "set__active": category.get('active', 0),
+        })
+
+    @staticmethod
+    def update_sub_category_oil(sub):
+        CategoryOilModel.objects(id=sub['_id']['$oid'], subCategories__sub_id=sub['sub_id']['$oid']).update(**{
+            "set__subCategories__S__subCategoryName": sub['subCategoryName'],
+            "set__subCategories__S__subCategoryDescription": sub['subCategoryDescription'],
+            "set__subCategories__S__active": sub.get('active', 0),
+        })
+
+    @staticmethod
+    def delete_category(catalog):
+        CategoryOilModel.objects(id=catalog['_id']['$oid']).delete()
+
+    @staticmethod
+    def delete_sub_category(catalog):
+        CategoryOilModel.objects(id=catalog['_id']['$oid']).delete()

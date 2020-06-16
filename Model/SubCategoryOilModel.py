@@ -4,7 +4,7 @@ from bson import ObjectId
 
 
 class SubCategoryOilModel(m.EmbeddedDocument):
-    _id = m.ObjectIdField(default=ObjectId)
+    sub_id = m.ObjectIdField(default=ObjectId)
     createdAt = m.DateTimeField(default=datetime.datetime.now)
     position = m.IntField(default=1)
     active = m.IntField(default=1)

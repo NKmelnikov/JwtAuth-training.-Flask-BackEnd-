@@ -44,7 +44,7 @@ class UploadHelper:
             return jsonify({'response': 'invalid extension'})
         f.filename = f"{ts}.{name}.{extension}"
         f.save(os.path.join(current_app.config['UPLOAD_PATH'], f.filename))
-        url = url_for('app.uploaded_files', filename=f.filename)
+        url = url_for('web.uploaded_files', filename=f.filename)
         return upload_success(url=f"{current_app.config['SERVER_URL']}{url}")
 
     @staticmethod

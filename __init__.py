@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from .Config import database, auth
 from .Router.web import web
-from .Router.category_oil import category_oil
+from .Router.category import category
 from .Router.brand import brand
 from .Router.catalog import catalog
 from .Router.post import post
@@ -30,7 +30,7 @@ def create_app():
     app.config['JWT_ACCESS_LIFESPAN'] = {'minutes': 100000}
 
     app.register_blueprint(web)
-    app.register_blueprint(category_oil)
+    app.register_blueprint(category)
     app.register_blueprint(brand)
     app.register_blueprint(catalog)
     app.register_blueprint(post)

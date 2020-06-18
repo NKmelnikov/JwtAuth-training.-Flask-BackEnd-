@@ -14,5 +14,5 @@ class CategoryModel(m.Document):
 
     meta = {
         'db_alias': 'core',
-        'collection': 'categories_oil'
+        'collection': 'categories'
     }

@@ -22,7 +22,7 @@ def create_category():
     return jsonify({'response': 'Ok'})
 
 
-@category.route('/create-sub-category', methods=['POST'])
+@category.route('/create-subcategory', methods=['POST'])
 def create_sub_category():
     CategoryController().create_sub_category(request.get_json())
     return jsonify({'response': 'Ok'})
@@ -34,7 +34,7 @@ def update_category():
     return jsonify({'response': 'Ok'})
 
 
-@category.route('/update-sub-category', methods=['POST'])
+@category.route('/update-subcategory', methods=['POST'])
 def update_sub_category():
     CategoryController().update_sub_category(request.get_json())
     return jsonify({'response': 'Ok'})
@@ -46,7 +46,7 @@ def delete_category():
     return jsonify({'response': 'Ok'})
 
 
-@category.route('/delete-sub-category', methods=['POST'])
+@category.route('/delete-subcategory', methods=['POST'])
 def delete_sub_category():
     CategoryController().delete_sub_category(request.get_json())
     return jsonify({'response': 'Ok'})

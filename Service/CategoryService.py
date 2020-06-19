@@ -62,7 +62,7 @@ class CategoryService:
 
     @staticmethod
     def update_sub_category(sub):
-        CategoryModel.objects(id=sub['_id']['$oid'], subCategories__sub_id=sub['sub_id']['$oid']).update(**{
+        CategoryModel.objects(id=sub['_id'], subCategories__sub_id=sub['sub_id']['$oid']).update(**{
             "set__subCategories__S__subCategoryName": sub['subCategoryName'],
             "set__subCategories__S__subCategoryDescription": sub['subCategoryDescription'],
             "set__subCategories__S__active": sub.get('active', 0),
@@ -78,7 +78,7 @@ class CategoryService:
             {"_id": ObjectId(sub['_id'])},
             {'$pull': {
                 'subCategories': {
-                    "sub_id": ObjectId(sub['sub_id']),
+                    "sub_id": ObjectId(sub['sub_id']['$oid']),
                 }
             }}
         )
@@ -101,5 +101,26 @@ class CategoryService:
 
     @staticmethod
     def bulk_delete_categories(data):
+        for i, item in enumerate(data):
+            CategoryModel.objects(id=item['_id']['$oid']).delete()
+
+    @staticmethod
+    def update_sub_category_position(data):
+        for i, item in enumerate(data):
+            CategoryModel.objects(id=item['_id']['$oid']).update_one(set__position=i + 1)
+        return CategoryModel.objects().to_json()
+
+    @staticmethod
+    def bulk_sub_activate_categories(data):
+        for i, item in enumerate(data):
+            CategoryModel.objects(id=item['_id']['$oid']).update_one(set__active=1)
+
+    @staticmethod
+    def bulk_sub_deactivate_categories(data):
+        for i, item in enumerate(data):
+            CategoryModel.objects(id=item['_id']['$oid']).update_one(set__active=0)
+
+    @staticmethod
+    def bulk_sub_delete_categories(data):
         for i, item in enumerate(data):
             CategoryModel.objects(id=item['_id']['$oid']).delete()

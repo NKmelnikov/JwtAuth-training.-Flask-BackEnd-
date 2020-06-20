@@ -11,7 +11,7 @@ def get_categories():
     return CategoryController().get_categories()
 
 
-@category.route('/get-categories-by-id', methods=['POST'])
+@category.route('/get-category-by-id', methods=['POST'])
 def get_category_by_id():
     return CategoryController().get_category_by_id(request.get_json())
 
@@ -22,33 +22,15 @@ def create_category():
     return jsonify({'response': 'Ok'})
 
 
-@category.route('/create-subcategory', methods=['POST'])
-def create_sub_category():
-    CategoryController().create_sub_category(request.get_json())
-    return jsonify({'response': 'Ok'})
-
-
 @category.route('/update-category', methods=['POST'])
 def update_category():
     CategoryController().update_category(request.get_json())
     return jsonify({'response': 'Ok'})
 
 
-@category.route('/update-subcategory', methods=['POST'])
-def update_sub_category():
-    CategoryController().update_sub_category(request.get_json())
-    return jsonify({'response': 'Ok'})
-
-
 @category.route('/delete-category', methods=['POST'])
 def delete_category():
     CategoryController().delete_category(request.get_json())
-    return jsonify({'response': 'Ok'})
-
-
-@category.route('/delete-subcategory', methods=['POST'])
-def delete_sub_category():
-    CategoryController().delete_sub_category(request.get_json())
     return jsonify({'response': 'Ok'})
 
 

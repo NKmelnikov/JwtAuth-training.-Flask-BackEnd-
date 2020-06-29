@@ -1,20 +1,14 @@
-import json
 from bson.json_util import dumps
-from flask import jsonify
 import datetime
-from bson import json_util, ObjectId
+from bson import ObjectId
 from ..Model.CategoryModel import CategoryModel
 from ..Model.SubCategoryModel import SubCategoryModel
-from ..Helper.JSONEncoder import JSONEncoder
 from ..Helper.UtilityHelper import UtilityHelper
 from ..Config.database import db
+from .Service import Service
 
 
-class CategoryService:
-
-    @staticmethod
-    def get_categories():
-        return CategoryModel.objects().order_by('position').to_json()
+class CategoryService(Service):
 
     @staticmethod
     def get_category_by_id(category_id, sort_type, direction):
@@ -41,13 +35,9 @@ class CategoryService:
         return dumps(request[0]) if len(request) > 0 else CategoryModel.objects().get(id=category_id['id']).to_json()
 
     @staticmethod
-    def get_categories_sorted_by_date() -> CategoryModel:
-        return CategoryModel.objects().order_by('-createdAt').to_json()
-
-    @staticmethod
     def create_category(category) -> CategoryModel:
         c = CategoryModel()
-        c.position = 1
+        c.position = 0
         c.active = category.get('active', 0)
         c.categoryType = category['categoryType']
         c.categoryName = category['categoryName']
@@ -65,31 +55,6 @@ class CategoryService:
             'set__active': category.get('active', 0),
         })
 
-    @staticmethod
-    def delete_category(catalog):
-        CategoryModel.objects(id=catalog['_id']['$oid']).delete()
-
-    @staticmethod
-    def update_category_position(data):
-        for i, item in enumerate(data):
-            CategoryModel.objects(id=item['_id']['$oid']).update_one(set__position=i + 1)
-        return CategoryModel.objects().to_json()
-
-    @staticmethod
-    def bulk_activate_categories(data):
-        for i, item in enumerate(data):
-            CategoryModel.objects(id=item['_id']['$oid']).update_one(set__active=1)
-
-    @staticmethod
-    def bulk_deactivate_categories(data):
-        for i, item in enumerate(data):
-            CategoryModel.objects(id=item['_id']['$oid']).update_one(set__active=0)
-
-    @staticmethod
-    def bulk_delete_categories(data):
-        for i, item in enumerate(data):
-            CategoryModel.objects(id=item['_id']['$oid']).delete()
-
     # ==================== SUBCATEGORY ====================
     @staticmethod
     def create_sub_category(sub):
@@ -99,7 +64,7 @@ class CategoryService:
                 'subCategories': {
                     'sub_id': ObjectId(),
                     'createdAt': datetime.datetime.now(),
-                    'position': sub.get('position', 1),
+                    'position': sub.get('position', 0),
                     'active': sub.get('active', 0),
                     'subCategoryName': sub['subCategoryName'],
                     'subCategoryDescription': sub['subCategoryDescription']

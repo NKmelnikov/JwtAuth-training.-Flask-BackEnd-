@@ -1,52 +1,57 @@
 from flask import Blueprint, request, jsonify
 from flask_cors import CORS
-from ..Controller.BrandController import BrandController
+from ..Service.BrandService import BrandService
+from ..Model.BrandModel import BrandModel
+import json
 
 brand = Blueprint('brand', __name__)
 CORS(brand, resources={r"/*": {"origins": "*"}})
 
 
 @brand.route('/get-brands', methods=['GET'])
-def get_brands():
-    return BrandController().get_brands()
+def get_all():
+    return BrandService(BrandModel).get_all()
 
 
 @brand.route('/create-brand', methods=['POST'])
 def create_brand():
-    BrandController().create_brand(request.get_json())
+    BrandService(BrandModel).create_brand(request.get_json())
+    BrandService(BrandModel).update_position(json.loads(BrandService(BrandModel).get_all()))
     return jsonify({'response': 'Ok'})
 
 
 @brand.route('/update-brand', methods=['POST'])
 def update_brand():
-    BrandController().update_brand(request.get_json())
+    BrandService(BrandModel).update_brand(request.get_json())
     return jsonify({'response': 'Ok'})
 
 
 @brand.route('/delete-brand', methods=['POST'])
-def delete_brand():
-    BrandController().delete_brand(request.get_json())
+def delete():
+    BrandService(BrandModel).delete(request.get_json())
+    BrandService(BrandModel).update_position(json.loads(BrandService(BrandModel).get_all()))
     return jsonify({'response': 'Ok'})
 
 
 @brand.route('/update-brand-position', methods=['POST'])
-def update_brand_position():
-    return BrandController().update_brand_position(request.get_json())
+def update_position():
+    return BrandService(BrandModel).update_position(request.get_json())
 
 
 @brand.route('/bulk-activate-brands', methods=['POST'])
-def bulk_activate_brands():
-    BrandController().bulk_activate_brands(request.get_json())
+def bulk_activate():
+    BrandService(BrandModel).bulk_activate(request.get_json())
     return jsonify({'response': 'Ok'})
 
 
 @brand.route('/bulk-deactivate-brands', methods=['POST'])
-def bulk_deactivate_brands():
-    BrandController().bulk_deactivate_brands(request.get_json())
+def bulk_deactivate():
+    BrandService(BrandModel).bulk_deactivate(request.get_json())
     return jsonify({'response': 'Ok'})
 
 
 @brand.route('/bulk-delete-brands', methods=['POST'])
-def bulk_delete_brands():
-    BrandController().bulk_delete_brands(request.get_json())
+def bulk_delete():
+    BrandService(BrandModel).bulk_delete(request.get_json())
+    BrandService(BrandModel).update_position(json.loads(BrandService(BrandModel).get_all()))
     return jsonify({'response': 'Ok'})

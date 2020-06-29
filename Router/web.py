@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_cors import CORS
-from ..Controller.UserController import UserController
+from ..Service.UserService import UserService
 from ..Helper.UploadHelper import UploadHelper
 
 web = Blueprint('web', __name__)
@@ -17,7 +17,7 @@ def register():
     json_data = request.get_json()
     email = json_data['email']
     password = json_data['password']
-    UserController().create_account(email, password)
+    UserService().create_account(email, password)
     return jsonify({'response': 'Ok'})
 
 
@@ -26,7 +26,7 @@ def login():
     json_data = request.get_json()
     email = json_data['email']
     password = json_data['password']
-    return UserController().create_auth_token(email, password)
+    return UserService().create_auth_token(email, password)
 
 
 @web.route('/ck-upload', methods=['POST'])

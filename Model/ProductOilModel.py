@@ -1,8 +1,6 @@
-import datetime
 import mongoengine as m
-from bson import ObjectId
-from ..Model.SubCategoryOilModel import SubCategoryOilModel
-from ..Model.CategoryOilModel import CategoryOilModel
+from ..Model.SubCategoryModel import SubCategoryModel
+from ..Model.CategoryModel import CategoryModel
 from ..Model.BrandModel import BrandModel
 
 
@@ -11,11 +9,11 @@ class ProductOilModel(m.Document):
     position = m.IntField()
     active = m.IntField()
     productName = m.StringField()
-    productImgPath = m.StringField()
     productDescription = m.StringField()
     productSpec = m.StringField()
-    category_id = m.ReferenceField(CategoryOilModel)
-    subCategory_id = m.ReferenceField(SubCategoryOilModel)
+    productImgPath = m.StringField()
+    category_id = m.ReferenceField(CategoryModel)
+    subCategory_id = m.ReferenceField(SubCategoryModel)
     brand_id = m.ReferenceField(BrandModel)
 
 

@@ -5,16 +5,16 @@ from .Service import Service
 class PostService(Service):
 
     @staticmethod
-    def create_post(_post) -> PostModel:
-        post = PostModel()
-        post.position = 0
-        post.postTitle = _post['postTitle']
-        post.postShortText = _post['postShortText']
-        post.postArticle = _post['postArticle']
-        post.postImgPath = _post['postImgPath']
-        post.active = _post.get('active', 0)
-        post.save()
-        return post
+    def create_post(post) -> PostModel:
+        p = PostModel()
+        p.position = 0
+        p.postTitle = post['postTitle']
+        p.postShortText = post['postShortText']
+        p.postArticle = post['postArticle']
+        p.postImgPath = post['postImgPath']
+        p.active = post.get('active', 0)
+        p.save()
+        return p
 
     @staticmethod
     def update_post(post):

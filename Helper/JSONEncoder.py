@@ -9,4 +9,3 @@ class JSONEncoder(json.JSONEncoder):
         elif isinstance(o, datetime.datetime):
             return {'$date': int(o.timestamp()) * 1000}
         return json.JSONEncoder.default(self, o)
-# TODO save the $oid and $date

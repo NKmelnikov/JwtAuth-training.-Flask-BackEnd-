@@ -5,14 +5,14 @@ from .Service import Service
 class BrandService(Service):
 
     @staticmethod
-    def create_brand(_brand) -> BrandModel:
-        brand = BrandModel()
-        brand.position = 0
-        brand.active = _brand.get('active', 0)
-        brand.brandName = _brand['brandName']
-        brand.brandImgPath = _brand['brandImgPath']
-        brand.save()
-        return brand
+    def create_brand(brand) -> BrandModel:
+        b = BrandModel()
+        b.position = 0
+        b.active = brand.get('active', 0)
+        b.brandName = brand['brandName']
+        b.brandImgPath = brand['brandImgPath']
+        b.save()
+        return b
 
     @staticmethod
     def update_brand(brand):

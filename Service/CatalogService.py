@@ -27,15 +27,15 @@ class CatalogService(Service):
         return JSONEncoder().encode(result)
 
     @staticmethod
-    def create_catalog(_catalog) -> CatalogModel:
-        catalog = CatalogModel()
-        catalog.brand = BrandModel(id=_catalog['brand']['_id']['$oid'])
-        catalog.position = 0
-        catalog.active = _catalog.get('active', 0)
-        catalog.catalogName = _catalog['catalogName']
-        catalog.catalogPdfPath = _catalog['catalogPdfPath']
-        catalog.save()
-        return catalog
+    def create_catalog(catalog) -> CatalogModel:
+        c = CatalogModel()
+        c.brand = BrandModel(id=catalog['brand']['_id']['$oid'])
+        c.position = 0
+        c.active = catalog.get('active', 0)
+        c.catalogName = catalog['catalogName']
+        c.catalogPdfPath = catalog['catalogPdfPath']
+        c.save()
+        return c
 
     @staticmethod
     def update_catalog(catalog):

@@ -64,7 +64,7 @@ class CategoryService(Service):
                 'subCategories': {
                     'sub_id': ObjectId(),
                     'createdAt': datetime.datetime.now(),
-                    'position': sub.get('position', 0),
+                    'position': sub.get('position', 1),
                     'active': sub.get('active', 0),
                     'subCategoryName': sub['subCategoryName'],
                     'subCategoryDescription': sub['subCategoryDescription']
@@ -94,23 +94,25 @@ class CategoryService(Service):
 
     @staticmethod
     def update_sub_category_position(data):
-        for i, item in enumerate(data['subCategories']):
-            CategoryModel.objects(id=UtilityHelper.get_proper_id(data), subCategories__sub_id=item['sub_id']['$oid']) \
-                .update_one(set__subCategories__S__position=i + 1)
+        category_id = data[-1] if isinstance(data, list) else data['_id']['$oid']
+        for i, item in enumerate(data):
+            if 'sub_id' in item:
+                CategoryModel.objects(id=category_id, subCategories__sub_id=item['sub_id']['$oid']) \
+                    .update_one(set__subCategories__S__position=i + 1)
         return CategoryModel.objects().to_json()
 
     @staticmethod
     def bulk_activate_sub_categories(data):
+        category_id = data[-1]
         for i, item in enumerate(data):
-            category_id = data[-1]
             if 'sub_id' in item:
                 CategoryModel.objects(id=category_id, subCategories__sub_id=item['sub_id']['$oid']).update_one(
                     set__subCategories__S__active=1)
 
     @staticmethod
     def bulk_deactivate_sub_categories(data):
+        category_id = data[-1]
         for i, item in enumerate(data):
-            category_id = data[-1]
             if 'sub_id' in item:
                 CategoryModel.objects(id=category_id, subCategories__sub_id=item['sub_id']['$oid']).update_one(
                     set__subCategories__S__active=0)

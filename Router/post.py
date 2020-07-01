@@ -16,7 +16,7 @@ def get_posts():
 @post.route('/create-post', methods=['POST'])
 def create_post():
     PostService(PostModel).create_post(request.get_json())
-    PostService(PostModel).update_position_after_action(json.loads(PostService(PostModel).get_all()))
+    PostService(PostModel).update_position(json.loads(PostService(PostModel).get_all()))
     return jsonify({'response': 'Ok'})
 
 
@@ -29,7 +29,7 @@ def update_post():
 @post.route('/delete-post', methods=['POST'])
 def delete_post():
     PostService(PostModel).delete(request.get_json())
-    PostService(PostModel).update_position_after_action(json.loads(PostService(PostModel).get_all()))
+    PostService(PostModel).update_position(json.loads(PostService(PostModel).get_all()))
     return jsonify({'response': 'Ok'})
 
 
@@ -53,5 +53,5 @@ def bulk_deactivate_posts():
 @post.route('/bulk-delete-posts', methods=['POST'])
 def bulk_delete_posts():
     PostService(PostModel).bulk_delete(request.get_json())
-    PostService(PostModel).update_position_after_action(json.loads(PostService(PostModel).get_all()))
+    PostService(PostModel).update_position(json.loads(PostService(PostModel).get_all()))
     return jsonify({'response': 'Ok'})

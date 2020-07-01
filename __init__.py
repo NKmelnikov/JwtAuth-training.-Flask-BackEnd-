@@ -7,7 +7,7 @@ from .Router.subcategory import subcategory
 from .Router.brand import brand
 from .Router.catalog import catalog
 from .Router.post import post
-from .Router.product import product
+from .Router.productOil import productOil
 from .Model.UserModel import UserModel
 from os import environ
 import sentry_sdk
@@ -36,7 +36,7 @@ def create_app():
     app.register_blueprint(brand)
     app.register_blueprint(catalog)
     app.register_blueprint(post)
-    app.register_blueprint(product)
+    app.register_blueprint(productOil)
     # app.before_request_funcs = {
     #     'authenticated': [auth_middleware]
     # }

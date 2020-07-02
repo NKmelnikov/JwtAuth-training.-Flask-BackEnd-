@@ -64,7 +64,7 @@ class CategoryService(Service):
                 'subCategories': {
                     'sub_id': ObjectId(),
                     'createdAt': datetime.datetime.now(),
-                    'position': sub.get('position', 1),
+                    'position': sub.get('position', 0),
                     'active': sub.get('active', 0),
                     'subCategoryName': sub['subCategoryName'],
                     'subCategoryDescription': sub['subCategoryDescription']

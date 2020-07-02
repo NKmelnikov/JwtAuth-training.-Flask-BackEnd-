@@ -12,8 +12,9 @@ CORS(subcategory, resources={r"/*": {"origins": "*"}})
 def create_sub_category():
     category_id = {'id': request.get_json()['id']}
     CategoryService(CategoryModel).create_sub_category(request.get_json())
-    CategoryService(CategoryModel).update_sub_category_position(json.loads(
-        CategoryService(CategoryModel).get_category_by_id(category_id, 'position', 1)))
+    category = json.loads(CategoryService(CategoryModel).get_category_by_id(category_id, 'position', 1))
+    category['subCategories'].append(category_id['id'])
+    CategoryService(CategoryModel).update_sub_category_position(category['subCategories'])
     return jsonify({'response': 'Ok'})
 
 
@@ -27,8 +28,9 @@ def update_sub_category():
 def delete_sub_category():
     category_id = {'id': request.get_json()['id']}
     CategoryService(CategoryModel).delete_sub_category(request.get_json())
-    CategoryService(CategoryModel).update_sub_category_position(json.loads(
-        CategoryService(CategoryModel).get_category_by_id(category_id, 'position', 1)))
+    category = json.loads(CategoryService(CategoryModel).get_category_by_id(category_id, 'position', 1))
+    category['subCategories'].append(category_id['id'])
+    CategoryService(CategoryModel).update_sub_category_position(category['subCategories'])
     return jsonify({'response': 'Ok'})
 
 
@@ -53,6 +55,7 @@ def bulk_deactivate_sub_categories():
 def bulk_delete_sub_categories():
     category_id = {'id': request.get_json()[-1]}
     CategoryService(CategoryModel).bulk_delete_sub_categories(request.get_json())
-    CategoryService(CategoryModel).update_sub_category_position(json.loads(
-        CategoryService(CategoryModel).get_category_by_id(category_id, 'position', 1)))
+    category = json.loads(CategoryService(CategoryModel).get_category_by_id(category_id, 'position', 1))
+    category['subCategories'].append(category_id['id'])
+    CategoryService(CategoryModel).update_sub_category_position(category['subCategories'])
     return jsonify({'response': 'Ok'})

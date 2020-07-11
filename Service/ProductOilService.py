@@ -23,7 +23,26 @@ class ProductOilService(Service):
                     'from': 'categories',
                     'localField': 'category_id',
                     'foreignField': '_id',
-                    'as': 'category '
+                    'as': 'category'
+                }
+            },
+            {'$unwind': "$brand"},
+            {'$unwind': "$category"},
+            {
+                '$addFields': {
+                    'subcategory': {
+                        '$reduce': {
+                            'input': "$category.subCategories",
+                            'initialValue': 'null',
+                            'in': {
+                                '$cond': [
+                                    {'$eq': ["$$this.sub_id", "$subCategory_id"]},
+                                    "$$this",
+                                    "$$value"
+                                ]
+                            }
+                        }
+                    }
                 }
             },
             {
@@ -37,10 +56,14 @@ class ProductOilService(Service):
 
     @staticmethod
     def create_product(product) -> ProductOilModel:
+        default_subcategory = {'sub_id': {'$oid': '5f097afbe6978021fd00fdef'}}
         p = ProductOilModel()
-        p.brand_id = BrandModel(id=product['brand_id']['$oid'])
-        p.category_id = CategoryModel(id=product['category_id']['$oid'])
-        p.subCategory_id = product['subCategory_id']['$oid']
+        p.brand_id = BrandModel(id=product['brand']['_id']['$oid'])
+        p.category_id = CategoryModel(id=product['category']['_id']['$oid'])
+        p.subCategory_id = product\
+            .get('subcategory', default_subcategory)\
+            .get('sub_id', {'$oid': '5f097afbe6978021fd00fdef'})\
+            .get('$oid', '5f097afbe6978021fd00fdef')
         p.position = 0
         p.active = product.get('active', 0)
         p.productName = product['productName']
@@ -55,9 +78,9 @@ class ProductOilService(Service):
     @staticmethod
     def update_product(product):
         ProductOilModel.objects(id=product['_id']['$oid']).update(**{
-            "set__brand_id": BrandModel(id=product['brand_id']['$oid']),
-            "set__category_id": CategoryModel(id=product['category_id']['$oid']),
-            "set__subCategory_id": product['subCategory_id']['$oid'],
+            "set__brand_id": BrandModel(id=product['brand']['_id']['$oid']),
+            "set__category_id": CategoryModel(id=product['category']['_id']['$oid']),
+            "set__subCategory_id": product['subcategory']['sub_id']['$oid'],
             "set__productName": product['productName'],
             "set__productDescription": product['productDescription'],
             "set__productSpec": product['productSpec'],
@@ -66,4 +89,3 @@ class ProductOilService(Service):
             "set__productPdf2Path": product['productPdf2Path'],
             "set__active": product.get('active', 0),
         })
-

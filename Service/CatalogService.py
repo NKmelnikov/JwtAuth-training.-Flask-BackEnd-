@@ -31,7 +31,7 @@ class CatalogService(Service):
         c = CatalogModel()
         c.brand = BrandModel(id=catalog['brand']['_id']['$oid'])
         c.position = 0
-        c.active = catalog.get('active', 0)
+        c.active = catalog.get('active', 1)
         c.catalogName = catalog['catalogName']
         c.catalogPdfPath = catalog['catalogPdfPath']
         c.save()
@@ -43,6 +43,6 @@ class CatalogService(Service):
             "set__brand": BrandModel(id=catalog['brand']['_id']['$oid']),
             "set__catalogName": catalog['catalogName'],
             "set__catalogPdfPath": catalog['catalogPdfPath'],
-            "set__active": catalog.get('active', 0),
+            "set__active": catalog.get('active', 1),
         })
 

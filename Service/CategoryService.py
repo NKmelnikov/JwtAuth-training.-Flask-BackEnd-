@@ -37,7 +37,7 @@ class CategoryService(Service):
     def create_category(category) -> CategoryModel:
         c = CategoryModel()
         c.position = 0
-        c.active = category.get('active', 0)
+        c.active = category.get('active', 1)
         c.categoryType = category['categoryType']
         c.categoryName = category['categoryName']
         c.categoryDescription = category['categoryDescription']
@@ -51,7 +51,7 @@ class CategoryService(Service):
             'set__categoryType': category['categoryType'],
             'set__categoryName': category['categoryName'],
             'set__categoryDescription': category['categoryDescription'],
-            'set__active': category.get('active', 0),
+            'set__active': category.get('active', 1),
         })
 
     # ==================== SUBCATEGORY ====================
@@ -64,7 +64,7 @@ class CategoryService(Service):
                     'sub_id': ObjectId(),
                     'createdAt': datetime.datetime.now(),
                     'position': sub.get('position', 0),
-                    'active': sub.get('active', 0),
+                    'active': sub.get('active', 1),
                     'subCategoryName': sub['subCategoryName'],
                     'subCategoryDescription': sub['subCategoryDescription']
 
@@ -77,7 +77,7 @@ class CategoryService(Service):
         CategoryModel.objects(id=sub['id'], subCategories__sub_id=sub['sub_id']['$oid']).update(**{
             'set__subCategories__S__subCategoryName': sub['subCategoryName'],
             'set__subCategories__S__subCategoryDescription': sub['subCategoryDescription'],
-            'set__subCategories__S__active': sub.get('active', 0),
+            'set__subCategories__S__active': sub.get('active', 1),
         })
 
     @staticmethod

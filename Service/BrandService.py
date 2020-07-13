@@ -8,7 +8,7 @@ class BrandService(Service):
     def create_brand(brand) -> BrandModel:
         b = BrandModel()
         b.position = 0
-        b.active = brand.get('active', 0)
+        b.active = brand.get('active', 1)
         b.brandName = brand['brandName']
         b.brandImgPath = brand['brandImgPath']
         b.save()

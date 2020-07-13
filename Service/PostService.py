@@ -12,7 +12,7 @@ class PostService(Service):
         p.postShortText = post['postShortText']
         p.postArticle = post['postArticle']
         p.postImgPath = post['postImgPath']
-        p.active = post.get('active', 0)
+        p.active = post.get('active', 1)
         p.save()
         return p
 
@@ -23,5 +23,5 @@ class PostService(Service):
             "set__postShortText": post['postShortText'],
             "set__postArticle": post['postArticle'],
             "set__postImgPath": post['postImgPath'],
-            "set__active": post.get('active', 0),
+            "set__active": post.get('active', 1),
         })

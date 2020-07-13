@@ -1,13 +1,14 @@
 from flask import Flask
 from flask_cors import CORS, cross_origin
 from .Config import database, auth
-from .Router.web import web
-from .Router.category import category
-from .Router.subcategory import subcategory
-from .Router.brand import brand
-from .Router.catalog import catalog
-from .Router.post import post
-from .Router.productOil import productOil
+from .Controller.HelperController import helper
+from .Controller.CategoryController import category
+from .Controller.SubcategoryController import subcategory
+from .Controller.BrandController import brand
+from .Controller.CatalogController import catalog
+from .Controller.NewsController import post
+from .Controller.ProductOilController import productOil
+from .Controller.ProductDrillController import productDrill
 from .Model.UserModel import UserModel
 from os import environ
 import sentry_sdk
@@ -30,13 +31,14 @@ def create_app():
     app.config['SERVER_URL'] = environ.get('SERVER_URL')
     app.config['JWT_ACCESS_LIFESPAN'] = {'minutes': 100000}
 
-    app.register_blueprint(web)
+    app.register_blueprint(helper)
     app.register_blueprint(category)
     app.register_blueprint(subcategory)
     app.register_blueprint(brand)
     app.register_blueprint(catalog)
     app.register_blueprint(post)
     app.register_blueprint(productOil)
+    app.register_blueprint(productDrill)
     # app.before_request_funcs = {
     #     'authenticated': [auth_middleware]
     # }

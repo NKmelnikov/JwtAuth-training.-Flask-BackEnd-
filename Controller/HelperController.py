@@ -3,16 +3,16 @@ from flask_cors import CORS
 from ..Service.UserService import UserService
 from ..Helper.UploadHelper import UploadHelper
 
-web = Blueprint('web', __name__)
-CORS(web, resources={r"/*": {"origins": "*"}})
+helper = Blueprint('helper', __name__)
+CORS(helper, resources={r"/*": {"origins": "*"}})
 
 
-@web.route('/')
+@helper.route('/')
 def welcome():
     return jsonify({'response': 'welcome to server'})
 
 
-@web.route('/register', methods=['POST'])
+@helper.route('/register', methods=['POST'])
 def register():
     json_data = request.get_json()
     email = json_data['email']
@@ -21,7 +21,7 @@ def register():
     return jsonify({'response': 'Ok'})
 
 
-@web.route('/login', methods=['POST'])
+@helper.route('/login', methods=['POST'])
 def login():
     json_data = request.get_json()
     email = json_data['email']
@@ -29,26 +29,26 @@ def login():
     return UserService().create_auth_token(email, password)
 
 
-@web.route('/ck-upload', methods=['POST'])
+@helper.route('/ck-upload', methods=['POST'])
 def ck_upload():
     return UploadHelper().ck_upload(request)
 
 
-@web.route('/files/<filename>')
+@helper.route('/files/<filename>')
 def uploaded_files(filename):
     return UploadHelper().uploaded_files(filename)
 
 
-@web.route('/files/pdf/<filename>')
+@helper.route('/files/pdf/<filename>')
 def uploaded_pdfs(filename):
     return UploadHelper().uploaded_pdfs(filename)
 
 
-@web.route('/upload-img-from-b64', methods=['POST'])
+@helper.route('/upload-img-from-b64', methods=['POST'])
 def upload_img_from_b64():
     return UploadHelper().upload_img_from_b64(request.get_json())
 
 
-@web.route('/upload-pdf', methods=['POST'])
+@helper.route('/upload-pdf', methods=['POST'])
 def upload_pdf():
     return UploadHelper().upload_pdf(request.files['pdf_file'])

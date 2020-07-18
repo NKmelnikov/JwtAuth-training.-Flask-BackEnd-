@@ -34,9 +34,9 @@ def ck_upload():
     return UploadHelper().ck_upload(request)
 
 
-@helper.route('/files/<filename>')
-def uploaded_files(filename):
-    return UploadHelper().uploaded_files(filename)
+@helper.route('/files/img/<filename>')
+def uploaded_images(filename):
+    return UploadHelper().uploaded_images(filename)
 
 
 @helper.route('/files/pdf/<filename>')
@@ -52,3 +52,8 @@ def upload_img_from_b64():
 @helper.route('/upload-pdf', methods=['POST'])
 def upload_pdf():
     return UploadHelper().upload_pdf(request.files['pdf_file'])
+
+
+@helper.route('/get-files-in-folder', methods=['POST'])
+def get_files_in_folder():
+    return UploadHelper().get_files_in_folder(request.get_json())

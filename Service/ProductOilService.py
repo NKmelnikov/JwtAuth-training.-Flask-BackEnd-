@@ -66,6 +66,7 @@ class ProductOilService(Service):
             .get('$oid', default_subcategory['sub_id']['$oid'])
         p.position = 0
         p.active = product.get('active', 1)
+        p.productSlug = product['productSlug']
         p.productName = product['productName']
         p.productDescription = product['productDescription']
         p.productSpec = product['productSpec']
@@ -81,6 +82,7 @@ class ProductOilService(Service):
             "set__brand_id": BrandModel(id=product['brand']['_id']['$oid']),
             "set__category_id": CategoryModel(id=product['category']['_id']['$oid']),
             "set__subCategory_id": product['subcategory']['sub_id']['$oid'],
+            "set__productSlug": product['productSlug'],
             "set__productName": product['productName'],
             "set__productDescription": product['productDescription'],
             "set__productSpec": product['productSpec'],

@@ -6,8 +6,8 @@ class BrandModel(m.Document):
     createdAt = m.DateTimeField(default=datetime.datetime.now)
     position = m.IntField(default=1)
     active = m.IntField(default=1)
-    brandImgPath = m.StringField()
-    brandName = m.StringField()
+    imgPath = m.StringField()
+    name = m.StringField()
 
     meta = {
         'db_alias': 'core',

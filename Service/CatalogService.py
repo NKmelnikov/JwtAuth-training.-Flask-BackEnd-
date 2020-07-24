@@ -32,8 +32,8 @@ class CatalogService(Service):
         c.brand = BrandModel(id=catalog['brand']['_id']['$oid'])
         c.position = 0
         c.active = catalog.get('active', 1)
-        c.catalogName = catalog['catalogName']
-        c.catalogPdfPath = catalog['catalogPdfPath']
+        c.name = catalog['name']
+        c.pdfPath = catalog['pdfPath']
         c.save()
         return c
 
@@ -41,8 +41,8 @@ class CatalogService(Service):
     def update_catalog(catalog):
         CatalogModel.objects(id=catalog['_id']['$oid']).update(**{
             "set__brand": BrandModel(id=catalog['brand']['_id']['$oid']),
-            "set__catalogName": catalog['catalogName'],
-            "set__catalogPdfPath": catalog['catalogPdfPath'],
+            "set__name": catalog['name'],
+            "set__pdfPath": catalog['pdfPath'],
             "set__active": catalog.get('active', 1),
         })
 

@@ -11,13 +11,13 @@ class ProductOilModel(m.Document):
     subCategory_id = m.ObjectIdField()
     position = m.IntField()
     active = m.IntField()
-    productSlug = m.StringField(unique=True)
-    productName = m.StringField()
-    productDescription = m.StringField()
-    productSpec = m.StringField()
-    productImgPath = m.StringField()
-    productPdf1Path = m.StringField()
-    productPdf2Path = m.StringField()
+    slug = m.StringField(unique=True)
+    name = m.StringField()
+    description = m.StringField()
+    spec = m.StringField()
+    imgPath = m.StringField()
+    pdf1Path = m.StringField()
+    pdf2Path = m.StringField()
 
     meta = {
         'db_alias': 'core',

@@ -21,9 +21,9 @@ class CategoryService(Service):
                 'createdAt': {'$first': '$createdAt'},
                 'position': {'$first': '$position'},
                 'active': {'$first': '$active'},
-                'categoryType': {'$first': '$categoryType'},
-                'categoryName': {'$first': '$categoryName'},
-                'categoryDescription': {'$first': '$categoryDescription'},
+                'type': {'$first': '$type'},
+                'name': {'$first': '$name'},
+                'description': {'$first': '$description'},
                 'subCategories': {
                     '$push': '$subCategories'
                 }
@@ -38,9 +38,9 @@ class CategoryService(Service):
         c = CategoryModel()
         c.position = 0
         c.active = category.get('active', 1)
-        c.categoryType = category['categoryType']
-        c.categoryName = category['categoryName']
-        c.categoryDescription = category['categoryDescription']
+        c.type = category['type']
+        c.name = category['name']
+        c.description = category['description']
         c.s = SubCategoryModel()
         c.save()
         return c
@@ -48,9 +48,9 @@ class CategoryService(Service):
     @staticmethod
     def update_category(category):
         CategoryModel.objects(id=category['_id']['$oid']).update(**{
-            'set__categoryType': category['categoryType'],
-            'set__categoryName': category['categoryName'],
-            'set__categoryDescription': category['categoryDescription'],
+            'set__type': category['type'],
+            'set__name': category['name'],
+            'set__description': category['description'],
             'set__active': category.get('active', 1),
         })
 
@@ -65,8 +65,8 @@ class CategoryService(Service):
                     'createdAt': datetime.datetime.now(),
                     'position': sub.get('position', 0),
                     'active': sub.get('active', 1),
-                    'subCategoryName': sub['subCategoryName'],
-                    'subCategoryDescription': sub['subCategoryDescription']
+                    'name': sub['name'],
+                    'description': sub['description']
 
                 }
             }}
@@ -75,8 +75,8 @@ class CategoryService(Service):
     @staticmethod
     def update_sub_category(sub):
         CategoryModel.objects(id=sub['id'], subCategories__sub_id=sub['sub_id']['$oid']).update(**{
-            'set__subCategories__S__subCategoryName': sub['subCategoryName'],
-            'set__subCategories__S__subCategoryDescription': sub['subCategoryDescription'],
+            'set__subCategories__S__name': sub['name'],
+            'set__subCategories__S__description': sub['description'],
             'set__subCategories__S__active': sub.get('active', 1),
         })
 

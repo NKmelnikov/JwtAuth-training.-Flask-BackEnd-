@@ -8,6 +8,6 @@ class SubCategoryModel(m.EmbeddedDocument):
     createdAt = m.DateTimeField(default=datetime.datetime.now)
     position = m.IntField(default=1)
     active = m.IntField(default=1)
-    subCategoryName = m.StringField()
-    subCategoryDescription = m.StringField()
+    name = m.StringField()
+    description = m.StringField()
 

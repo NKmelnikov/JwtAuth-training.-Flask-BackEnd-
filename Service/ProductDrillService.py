@@ -66,10 +66,10 @@ class ProductDrillService(Service):
             .get('$oid', default_subcategory['sub_id']['$oid'])
         p.position = 0
         p.active = product.get('active', 1)
-        p.productSlug = product['productSlug']
-        p.productName = product['productName']
-        p.productDescription = product['productDescription']
-        p.productPdfPath = product['productPdfPath']
+        p.slug = product['slug']
+        p.name = product['name']
+        p.description = product['description']
+        p.pdfPath = product['pdfPath']
         p.save()
         return p
 
@@ -79,9 +79,9 @@ class ProductDrillService(Service):
             "set__brand_id": BrandModel(id=product['brand']['_id']['$oid']),
             "set__category_id": CategoryModel(id=product['category']['_id']['$oid']),
             "set__subCategory_id": product['subcategory']['sub_id']['$oid'],
-            "set__productSlug": product['productSlug'],
-            "set__productName": product['productName'],
-            "set__productDescription": product['productDescription'],
-            "set__productPdfPath": product['productPdfPath'],
+            "set__slug": product['slug'],
+            "set__name": product['name'],
+            "set__description": product['description'],
+            "set__pdfPath": product['pdfPath'],
             "set__active": product.get('active', 1),
         })

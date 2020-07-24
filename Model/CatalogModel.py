@@ -8,8 +8,8 @@ class CatalogModel(m.Document):
     createdAt = m.DateTimeField(default=datetime.datetime.now)
     position = m.IntField(default=1)
     active = m.IntField(default=1)
-    catalogPdfPath = m.StringField()
-    catalogName = m.StringField()
+    pdfPath = m.StringField()
+    name = m.StringField()
 
     meta = {
         'db_alias': 'core',

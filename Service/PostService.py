@@ -8,10 +8,10 @@ class PostService(Service):
     def create_post(post) -> PostModel:
         p = PostModel()
         p.position = 0
-        p.postTitle = post['postTitle']
-        p.postShortText = post['postShortText']
-        p.postArticle = post['postArticle']
-        p.postImgPath = post['postImgPath']
+        p.title = post['title']
+        p.shortText = post['shortText']
+        p.article = post['article']
+        p.imgPath = post['imgPath']
         p.active = post.get('active', 1)
         p.save()
         return p
@@ -19,9 +19,9 @@ class PostService(Service):
     @staticmethod
     def update_post(post):
         PostModel.objects(id=post['_id']['$oid']).update(**{
-            "set__postTitle": post['postTitle'],
-            "set__postShortText": post['postShortText'],
-            "set__postArticle": post['postArticle'],
-            "set__postImgPath": post['postImgPath'],
+            "set__title": post['title'],
+            "set__shortText": post['shortText'],
+            "set__article": post['article'],
+            "set__imgPath": post['imgPath'],
             "set__active": post.get('active', 1),
         })

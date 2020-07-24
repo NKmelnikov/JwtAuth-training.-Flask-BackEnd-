@@ -11,10 +11,10 @@ class ProductDrillModel(m.Document):
     subCategory_id = m.ObjectIdField()
     position = m.IntField()
     active = m.IntField()
-    productSlug = m.StringField(unique=True)
-    productName = m.StringField()
-    productDescription = m.StringField()
-    productPdfPath = m.StringField()
+    slug = m.StringField(unique=True)
+    name = m.StringField()
+    description = m.StringField()
+    pdfPath = m.StringField()
 
     meta = {
         'db_alias': 'core',

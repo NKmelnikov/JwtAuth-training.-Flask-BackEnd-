@@ -3,6 +3,8 @@ from ..Model.BrandModel import BrandModel
 from ..Model.CategoryModel import CategoryModel
 from ..Helper.JSONEncoder import JSONEncoder
 from .Service import Service
+from ..Config.database import db
+from bson.json_util import dumps
 
 
 class ProductOilService(Service):
@@ -53,6 +55,10 @@ class ProductOilService(Service):
         ]))
 
         return JSONEncoder().encode(result)
+
+    @staticmethod
+    def get_product_by_slug(data):
+        return dumps(db().products_oil.find({'slug': data['slug']}))
 
     @staticmethod
     def create_product(product) -> ProductOilModel:

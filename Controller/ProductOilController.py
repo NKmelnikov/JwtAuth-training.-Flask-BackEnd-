@@ -14,6 +14,11 @@ def get_all():
     return ProductOilService(ProductOilModel).get_product()
 
 
+@productOil.route('/get-product-oil-by-slug', methods=['POST'])
+def get_product_by_slug():
+    return ProductOilService(ProductOilModel).get_product_by_slug(request.get_json())
+
+
 @productOil.route('/create-product-oil', methods=['POST'])
 def create():
     ProductOilService(ProductOilModel).create_product(request.get_json())

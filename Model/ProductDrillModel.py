@@ -11,7 +11,6 @@ class ProductDrillModel(m.Document):
     subCategory_id = m.ObjectIdField()
     position = m.IntField()
     active = m.IntField()
-    slug = m.StringField(unique=True)
     name = m.StringField()
     description = m.StringField()
     pdfPath = m.StringField()

@@ -7,7 +7,9 @@ class BrandModel(m.Document):
     position = m.IntField(default=1)
     active = m.IntField(default=1)
     imgPath = m.StringField()
+    slug = m.StringField(unique=True)
     name = m.StringField()
+    description = m.StringField()
 
     meta = {
         'db_alias': 'core',

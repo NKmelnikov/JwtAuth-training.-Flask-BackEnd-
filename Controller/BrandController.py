@@ -13,6 +13,11 @@ def get_all():
     return BrandService(BrandModel).get_all()
 
 
+@brand.route('/get-brand-by-slug', methods=['POST'])
+def get_brand_by_slug():
+    return BrandService(BrandModel).get_brand_by_slug(request.get_json())
+
+
 @brand.route('/create-brand', methods=['POST'])
 def create_brand():
     BrandService(BrandModel).create_brand(request.get_json())
